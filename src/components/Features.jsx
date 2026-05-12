@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MdDarkMode, MdOutlineLightMode, MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight  } from "react-icons/md";
+import { MdDarkMode, MdOutlineLightMode, MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdOutlineEmail  } from "react-icons/md";
 import { FaHeart } from "react-icons/fa6";
 const Features = ({theme, setTheme, avatars, imgIndex, setImgIndex}) => {
 
@@ -23,6 +23,10 @@ const Features = ({theme, setTheme, avatars, imgIndex, setImgIndex}) => {
       alert("The image can only be changed up to a certain limit")
     }
     return;
+  }
+
+  const handleContact = ()=>{
+    alert("Thank you for contacting us.");
   }
 
     return (
@@ -55,6 +59,12 @@ const Features = ({theme, setTheme, avatars, imgIndex, setImgIndex}) => {
                     </div>
                     <span className='w-3'>{likesCount}</span>
                 </div>
+
+                <div className={`p-1.5 bg-blue-600 flex items-center gap-1 text-white text-sm font-medium rounded-lg hover:scale-105 active:scale-95 duration-300 cursor-pointer`} onClick={handleContact}>
+                    <MdOutlineEmail className='text-lg' />
+                    <span>Contact</span>
+                </div>
+
             </div>
         </footer>
     )
