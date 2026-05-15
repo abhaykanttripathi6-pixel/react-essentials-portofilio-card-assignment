@@ -1,33 +1,38 @@
 import React, { useState } from 'react';
-import { MdDarkMode, MdOutlineLightMode, MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdOutlineEmail  } from "react-icons/md";
+import { MdDarkMode, MdOutlineLightMode, MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdOutlineEmail } from "react-icons/md";
 import { FaHeart } from "react-icons/fa6";
-const Features = ({theme, setTheme, avatars, imgIndex, setImgIndex}) => {
+const Features = ({ theme, setTheme, employees, setEmployees, employeeIndex, setEmployeeIndex }) => {
 
     const [likesCount, setLikesCount] = useState(0);
 
-    const handleIncrement = (val)=>{
-    if((imgIndex < avatars.length-1) && (val==='img')){
-      return setImgIndex(prev => prev+1);
-    }else if(val === 'like'){
-      return setLikesCount(prev => prev+1);
-    }else{
-      alert("The image can only be changed up to a certain limit")
-    }
-    return;
-  }
+    const handleIncrement = (val) => {
 
-  const handleDecrement = ()=>{
-     if(imgIndex > 0){
-      return setImgIndex(prev => prev-1);
-    }else{
-      alert("The image can only be changed up to a certain limit")
-    }
-    return;
-  }
+        if (val === 'img') {
 
-  const handleContact = ()=>{
-    alert("Thank you for contacting us.");
-  }
+            if ((employeeIndex < employees.length - 1)) return setEmployeeIndex(prev => prev + 1);
+            setLikesCount(0);
+            if ((employeeIndex === employees.length - 1)) return setEmployeeIndex(0);
+            setLikesCount(0);
+
+        }
+
+        if (val === "like") {
+            setEmployees((prev) => prev.map((emp, index) => index === employeeIndex ? { ...emp , likes: emp.likes + 1 } : emp));
+        }
+
+        return;
+    }
+
+    const handleDecrement = () => {
+        if (employeeIndex > 0) {
+            return setEmployeeIndex(prev => prev - 1);
+        }
+        return setEmployeeIndex(employees.length - 1);
+    }
+
+    const handleContact = () => {
+        alert("Thank you for contacting us.");
+    }
 
     return (
         <footer>
@@ -50,14 +55,14 @@ const Features = ({theme, setTheme, avatars, imgIndex, setImgIndex}) => {
                 <div className={`flex justify-center items-center gap-2 text-xl cursor-pointer ${theme ? 'text-white' : ''}`} >
                     <div className='leftArr' onClick={() => handleDecrement()}><MdKeyboardArrowLeft /></div>
                     <div className="rightArr" onClick={() => handleIncrement('img')}><MdOutlineKeyboardArrowRight /></div>
-                    <div className='text-xs'><span>{imgIndex + 1}/{avatars.length}</span></div>
+                    <div className='text-xs'><span>{employeeIndex + 1}/{employees.length}</span></div>
                 </div>
 
                 <div className={`flex items-center gap-1 cursor-pointer ${theme ? 'text-white' : ''}`}>
                     <div className='text-red-600 flex align-center' onClick={() => handleIncrement('like')}>
                         <FaHeart className='w-8 active:scale-130 duration-800' />
                     </div>
-                    <span className='w-3'>{likesCount}</span>
+                    <span className='w-3'>{employees[employeeIndex].likes}</span>
                 </div>
 
                 <div className={`p-1.5 bg-blue-600 flex items-center gap-1 text-white text-sm font-medium rounded-lg hover:scale-105 active:scale-95 duration-300 cursor-pointer`} onClick={handleContact}>
